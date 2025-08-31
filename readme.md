@@ -23,7 +23,7 @@ Este projeto implementa um pipeline ETL completo conforme especificado no teste 
 ### 1. Preparar ambiente
 ```bash
 git clone https://github.com/IcaroWil/teste_data_eng.git
-cd teste_delfos
+cd teste_data_eng
 
 # Criar ambiente virtual
 python -m venv .venv
