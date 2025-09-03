@@ -73,9 +73,11 @@ uvicorn src.api.main:app --reload --host 0.0.0.0 --port 8000
 ```bash
 # Em outro terminal
 curl "http://localhost:8000/data?start=2025-08-31T00:00:00Z&end=2025-08-31T23:59:59Z"
+# Alterar a data para o dia que você populou
 
 # Múltiplas variáveis
 curl "http://localhost:8000/data?start=2025-08-31T00:00:00Z&end=2025-08-31T23:59:59Z&variables=wind_speed,power"
+# Alterar a data para o dia que você populou
 ```
 
 ### 7. Executar ETL
@@ -179,12 +181,15 @@ psql -h localhost -p 5433 -U user -d target_db
 ```bash
 # Dados de um dia específico
 curl "http://localhost:8000/data?start=2025-08-31T00:00:00Z&end=2025-08-31T23:59:59Z"
+# Alterar a data para o dia que você populou
 
 # Apenas wind_speed
 curl "http://localhost:8000/data?start=2025-08-31T00:00:00Z&end=2025-08-31T23:59:59Z&variables=wind_speed"
+# Alterar a data para o dia que você populou
 
 # Múltiplas variáveis
 curl "http://localhost:8000/data?start=2025-08-31T00:00:00Z&end=2025-08-31T23:59:59Z&variables=wind_speed,power"
+# Alterar a data para o dia que você populou
 ```
 
 ## Troubleshooting
