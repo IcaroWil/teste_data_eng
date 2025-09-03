@@ -60,6 +60,7 @@ cp .env.example .env
 ```bash
 # Gerar dados simulados (10 dias, 1-min)
 python -m src.db.source_seed
+# Dados 1-min de 2025-08-22 00:00:00 a 2025-08-31 23:59:00 (10 dias)
 ```
 
 ### 5. Subir API
@@ -71,14 +72,19 @@ uvicorn src.api.main:app --reload --host 0.0.0.0 --port 8000
 ### 6. Testar API
 ```bash
 # Em outro terminal
-curl "http://localhost:8000/data?start=xxxx-xx-xxT00:00:00Z&end=xxxx-xx-xxT23:59:59Z"
-# Alterar o valor de x para a data que populou EX: 2025-08-31
+curl "http://localhost:8000/data?start=2025-08-31T00:00:00Z&end=2025-08-31T23:59:59Z"
+
+# Múltiplas variáveis
+curl "http://localhost:8000/data?start=2025-08-31T00:00:00Z&end=2025-08-31T23:59:59Z&variables=wind_speed,power"
 ```
 
 ### 7. Executar ETL
 ```bash
-# Processar dados
+# Processar dados para hoje
 python -m src.etl.run_etl
+
+# Ou para uma data específica
+python -m src.etl.run_etl --date 2025-08-31
 ```
 
 ## Bônus: Dagster 
@@ -132,6 +138,7 @@ src/
 - **PostgreSQL**: Bancos de dados
 - **SQLAlchemy**: ORM e conexões
 - **Pandas**: Processamento de dados
+- **httpx**: Cliente HTTP para comunicação entre serviços
 - **Dagster**: Orquestração (bônus)
 - **Docker**: Containerização dos bancos
 
@@ -171,12 +178,13 @@ psql -h localhost -p 5433 -U user -d target_db
 ### Testar API
 ```bash
 # Dados de um dia específico
-curl "http://localhost:8000/data?start=xxxx-xx-xxT00:00:00Z&end=xxxx-xx-xxT23:59:59Z"
-# Alterar o valor de x para o dia específico
+curl "http://localhost:8000/data?start=2025-08-31T00:00:00Z&end=2025-08-31T23:59:59Z"
 
 # Apenas wind_speed
-curl "http://localhost:8000/data?start=xxxx-xx-xxT00:00:00Z&end=xxxx-xx-xxT23:59:59Z&variables=wind_speed"
-# Alterar o valor de x para a data específica
+curl "http://localhost:8000/data?start=2025-08-31T00:00:00Z&end=2025-08-31T23:59:59Z&variables=wind_speed"
+
+# Múltiplas variáveis
+curl "http://localhost:8000/data?start=2025-08-31T00:00:00Z&end=2025-08-31T23:59:59Z&variables=wind_speed,power"
 ```
 
 ## Troubleshooting
